@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ImronFrontend | shadow & code</title>
+  <!-- Google Fonts + subtle icons (Font Awesome kit style via CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;   /* TOTAL BLACK BACKGROUND */
+      color: #f0f0f0;             /* off-white text for smooth contrast */
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Fira Code', monospace;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar - dark style */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2c2c2c;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444;
+    }
+
+    /* CONTAINER + GRID LAYOUT */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+    }
+
+    /* ---------- HERO / glitch effect + ascii vibe ---------- */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid #1e1e1e;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero-left {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #0f0f0f;
+      border-left: 3px solid #e0e0e0;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      font-weight: 400;
+      color: #aaa;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+
+    h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 60%, #aaaaaa 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .highlight {
+      color: #e0e0e0;
+      border-bottom: 2px solid #333;
+    }
+    .tagline {
+      font-size: 1.2rem;
+      color: #b0b0b0;
+      border-left: 2px solid #2c2c2c;
+      padding-left: 1rem;
+      margin: 1rem 0;
+    }
+    .terminal-glow {
+      background: #050505;
+      padding: 0.5rem 1rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      display: inline-block;
+      border-radius: 12px;
+      border: 0.5px solid #2b2b2b;
+      color: #cdcdcd;
+    }
+
+    /* SYSTEM INFO CARDS (manjaro style) */
+    .sys-panel {
+      background: #030303;
+      border: 1px solid #1f1f1f;
+      border-radius: 28px;
+      padding: 1.4rem 1.8rem;
+      width: 100%;
+      max-width: 380px;
+      margin-top: 1rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.8);
+    }
+    .sys-line {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      padding: 0.4rem 0;
+      border-bottom: 0.5px dotted #1c1c1c;
+      color: #cfcfcf;
+    }
+    .sys-line i {
+      width: 24px;
+      color: white;
+    }
+    .distro-icon {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* skill section (black / white structure) */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin: 3rem 0 1.2rem 0;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title span {
+      background: #101010;
+      padding: 0.2rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #ccc;
+    }
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .skill-card {
+      background: #0a0a0a;
+      border-radius: 24px;
+      padding: 1.5rem;
+      flex: 1;
+      min-width: 180px;
+      border: 1px solid #202020;
+      transition: 0.2s ease;
+    }
+    .skill-card:hover {
+      border-color: #3a3a3a;
+      background: #0c0c0c;
+    }
+    .skill-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .progress-bar-bg {
+      background: #1e1e1e;
+      border-radius: 100px;
+      height: 8px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    .progress-fill {
+      background: #efefef;
+      border-radius: 100px;
+      height: 8px;
+      width: 0%;
+    }
+    .percent {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    /* repo cards (popular repos) */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin: 2rem 0;
+    }
+    .repo-card {
+      background: #050505;
+      border: 1px solid #1c1c1c;
+      border-radius: 20px;
+      padding: 1.3rem 1.5rem;
+      transition: all 0.2s;
+    }
+    .repo-card:hover {
+      border-color: #2e2e2e;
+      background: #080808;
+      transform: translateY(-2px);
+    }
+    .repo-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .repo-name i {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+    .repo-lang {
+      display: inline-block;
+      background: #141414;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-top: 0.6rem;
+      color: #c0c0c0;
+    }
+    .repo-desc {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: #9f9f9f;
+    }
+
+    /* activity / contributions : minimalist timeline */
+    .contrib-area {
+      background: #020202;
+      border-radius: 28px;
+      border: 1px solid #1b1b1b;
+      padding: 1.8rem;
+      margin: 2rem 0;
+    }
+    .contrib-stats {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .stat-badge {
+      background: #0d0d0d;
+      padding: 1rem 1.6rem;
+      border-radius: 32px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+    }
+    .week-grid {
+      display: flex;
+      gap: 6px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    .day {
+      width: 12px;
+      height: 12px;
+      background: #171717;
+      border-radius: 2px;
+    }
+    .day.active-low {
+      background: #2c2c2c;
+    }
+    .day.active-med {
+      background: #5e5e5e;
+    }
+    .day.active-high {
+      background: #b0b0b0;
+    }
+    .day.active-max {
+      background: #ffffff;
+    }
+
+    /* find me (social) */
+    .social-links {
+      margin: 2rem 0;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      border-top: 1px solid #181818;
+      padding-top: 2rem;
+    }
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #0a0a0a;
+      padding: 0.7rem 1.3rem;
+      border-radius: 60px;
+      transition: 0.2s;
+      border: 0.5px solid #242424;
+      text-decoration: none;
+      color: #efefef;
+    }
+    .social-item:hover {
+      background: #141414;
+      border-color: #3d3d3d;
+    }
+    .footer-quote {
+      text-align: center;
+      margin-top: 4rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #464646;
+    }
+
+    button, a {
+      transition: all 0.2s;
+    }
+    @media (max-width: 750px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+      .sys-panel {
+        max-width: 100%;
+      }
+    }
+    i, .fas, .far {
+      color: #dddddd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HERO SECTION - black dominant with white sparks -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="badge">
+        <i class="fas fa-terminal"></i>   user@imron:~ 
+      </div>
+      <h1>ImronFrontend<br><span style="font-size: 2rem; background: none; -webkit-background-clip: unset; color:#ccc;">build · break · fix</span></h1>
+      <div class="tagline">
+        <i class="fas fa-code"></i> → build stuff that works <br>
+        <i class="fas fa-bug"></i> → break stuff that doesn't <br>
+        <i class="fas fa-tape"></i> → fix it with duct tape & stackoverflow
+      </div>
+      <div class="terminal-glow">
+        <i class="fab fa-linux"></i>  i use manjaro btw · <i class="fas fa-crown"></i> hyprland/wayland
+      </div>
+    </div>
+    <div class="sys-panel">
+      <div class="sys-line"><i class="fas fa-tux"></i> <span class="distro-icon">    Manjaro Linux x86_64</span></div>
+      <div class="sys-line"><i class="fab fa-linux"></i>   Linux 6.18.8-1-MANJARO</div>
+      <div class="sys-line"><i class="fas fa-microchip"></i>   Intel i7-8750H (12) @ 4.10 GHz</div>
+      <div class="sys-line"><i class="fas fa-tv"></i>   NVIDIA GTX 1050 Ti + Intel UHD 630</div>
+      <div class="sys-line"><i class="fas fa-memory"></i> 󰍛  3.53 GiB / 15.26 GiB (23%)</div>
+      <div class="sys-line"><i class="fas fa-hdd"></i>   43.27 GiB / 233.38 GiB (19%) - ext4</div>
+      <div class="sys-line"><i class="fas fa-laptop-code"></i>   zsh 5.9 · alacritty 0.16.1</div>
+    </div>
+  </div>
+
+  <!-- SKILL SECTION (HTML 80% , CSS 75%, JS 30%) -->
+  <div class="section-title">
+    <span>⚡ stack & weapons</span> <i class="fas fa-cogs"></i>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-name">HTML5</div>
+      <div class="progress-bar-bg"><div class="progress-fill" style="width: 80%;"></div></div>
+      <div class="percent">80% · semantic, accesibilidad</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">CSS3</div>
+      <div class="progress-bar-bg"><div class="progress-fill" style="width: 75%;"></div></div>
+      <div class="percent">75% · flex, grid, animaciones, responsive</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">JavaScript</div>
+      <div class="progress-bar-bg"><div class="progress-fill" style="width: 30%;"></div></div>
+      <div class="percent">30% · basics, DOM, eventos</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-name">scratch · bash</div>
+      <div class="progress-bar-bg"><div class="progress-fill" style="width: 55%;"></div></div>
+      <div class="percent">duct tape certified</div>
+    </div>
+  </div>
+
+  <!-- REPOSITORIES: exactly like in profile + custom -->
+  <div class="section-title">
+    <span>📦 popular repositories</span> <i class="fab fa-github"></i>
+  </div>
+  <div class="repo-grid">
+    <div class="repo-card">
+      <div class="repo-name"><i class="fab fa-github-alt"></i> Todo-list</div>
+      <div class="repo-lang">CSS · JavaScript</div>
+      <div class="repo-desc">Minimal todo app, local storage, dark mode ready.</div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name"><i class="far fa-clock"></i> Closed-Clock</div>
+      <div class="repo-lang">JavaScript 1</div>
+      <div class="repo-desc">Pomodoro & elegant analog clock widget.</div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name"><i class="fas fa-cube"></i> new Public</div>
+      <div class="repo-lang">CSS</div>
+      <div class="repo-desc">Experimental UI micro-framework.</div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name"><i class="fas fa-layer-group"></i> Union Public</div>
+      <div class="repo-lang">CSS</div>
+      <div class="repo-desc">Flexbox grid utility + components.</div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name"><i class="fas fa-user-astronaut"></i> ImronFrontend</div>
+      <div class="repo-lang">README · config</div>
+      <div class="repo-desc">Profile repo - "Sup 👋 i write code btw"</div>
+    </div>
+    <div class="repo-card">
+      <div class="repo-name"><i class="fas fa-hospital-user"></i> Trafalgar</div>
+      <div class="repo-lang">CSS</div>
+      <div class="repo-desc">Healthcare landing page concept.</div>
+    </div>
+  </div>
+
+  <!-- CONTRIBUTION ACTIVITY + GITHUB STATS (mimicking last year 72 contributions) -->
+  <div class="contrib-area">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: baseline;">
+      <div><i class="fas fa-chart-line"></i> <strong> contribution activity</strong> <span style="color:#aaa;"> last year — 72 contributions</span></div>
+      <div style="font-family: monospace; font-size: 0.7rem;">Learn how we count contributions</div>
+    </div>
+    <div class="contrib-stats">
+      <div class="stat-badge"><span class="stat-number">72</span><br>total</div>
+      <div class="stat-badge"><span class="stat-number">12</span><br>this month</div>
+      <div class="stat-badge"><span class="stat-number">#ducttape</span><br>fixes</div>
+    </div>
+    <!-- pseudo contribution graph (black/white grid) -->
+    <div style="margin-top: 1.2rem;">
+      <div style="font-size: 0.7rem; margin-bottom: 8px;">📆 contributions heat (simulated)</div>
+      <div class="week-grid" id="contribGrid"></div>
+      <div style="display: flex; gap: 1rem; margin-top: 1rem; font-size: 0.7rem; justify-content: flex-end;">
+        <span>Less</span> <span style="background:#171717; width:12px; height:12px; display: inline-block;"></span>
+        <span style="background:#2c2c2c; width:12px; height:12px; display: inline-block;"></span>
+        <span style="background:#5e5e5e; width:12px; height:12px; display: inline-block;"></span>
+        <span style="background:#b0b0b0; width:12px; height:12px; display: inline-block;"></span>
+        <span style="background:#ffffff; width:12px; height:12px; display: inline-block;"></span> <span>More</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- "what i do" fun section -->
+  <div class="section-title">
+    <span>⚙️ workflow & manifesto</span> <i class="fas fa-terminal"></i>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 1rem; background: #040404; border-radius: 24px; padding: 1.5rem; border: 1px solid #202020;">
+    <div style="flex:1; min-width: 180px;">
+      <i class="fas fa-check-circle" style="color:#ccc;"></i> <strong>→ build stuff that works</strong><br>
+      <span style="font-size: 0.85rem;">vanilla html/css + js components</span>
+    </div>
+    <div style="flex:1; min-width: 180px;">
+      <i class="fas fa-skull-crossbones"></i> <strong>→ break stuff that doesn't</strong><br>
+      <span style="font-size: 0.85rem;">torture testing & edge cases</span>
+    </div>
+    <div style="flex:1; min-width: 180px;">
+      <i class="fas fa-tools"></i> <strong>→ fix it with duct tape & stackoverflow</strong><br>
+      <span style="font-size: 0.85rem;">production patches & hotfix culture</span>
+    </div>
+  </div>
+
+  <!-- find me (social and email) -->
+  <div class="social-links">
+    <a href="https://github.com/ImronFrontend" target="_blank" class="social-item"><i class="fab fa-github"></i> github.com/ImronFrontend</a>
+  </div>
+
+  <!-- Quote / ascii art style -->
+  <div class="footer-quote">
+    <pre style="color:#2a2a2a; font-size: 0.65rem; letter-spacing: 0.5px;">
+      ╭━━━┳━━━┳━━┳━━┳━━┳━━━┳━━━┳━━┳━━┳━━━╮
+      ┃╭━╮┃╭━╮┣╮╭┫╭╮┃╭╮┃╭━╮┃╭━╮┣╮╭┫╭╮┃╭━╮┃
+      ┃╰━━┫┃┃┃┃┃┃┃╰╯┃╰╯┃┃┃┃┃┃┃┃┃┃┃┃╰╯┃┃┃┃┃
+      ╰━━╮┃┃┃┃┃┃┃┃╭╮┃╭╮┃┃┃┃┃┃┃┃┃┃┃┃╭╮┃┃┃┃┃
+      ┃╰━╯┃╰━╯┣╯╰┫╰╯┃╰╯┃╰━╯┃╰━╯┣╯╰┫╰╯┃╰━╯┃
+      ╰━━━┻━━━┻━━┻━━┻━━┻━━━┻━━━┻━━┻━━┻━━━╯
+      "i write code btw" — ImronFrontend
+    </pre>
+  </div>
+</div>
+
+<!-- tiny script to generate contribution grid + dynamic things + terminal style -->
+<script>
+  (function() {
+    // generate contributions grid based on last year pattern (black & white mood)
+    const container = document.getElementById('contribGrid');
+    if(container) {
+      // 52 weeks * 7 days = 364 cells
+      for(let i = 0; i < 364; i++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.classList.add('day');
+        // randomness to simulate contributions with black/white accent : mostly dark, some white/gray
+        let r = Math.random();
+        if(r < 0.7) {
+          // no or low activity (blackish)
+          if(r < 0.45) dayDiv.classList.add('active-low');    // subtle
+          else dayDiv.style.background = "#101010";
+        } else if(r < 0.85) {
+          dayDiv.classList.add('active-med');   // medium gray
+        } else if(r < 0.96) {
+          dayDiv.classList.add('active-high');  // light gray
+        } else {
+          dayDiv.classList.add('active-max');   // pure white
+        }
+        container.appendChild(dayDiv);
+      }
+      // add some real stats to match ~72 contributions -> adjust few white spots to represent actual.
+      // but we keep it aesthetic abstract.
+    }
+
+    // dynamic terminal banner / additional small info
+    const asciiBlock = document.querySelector('.footer-quote pre');
+    if(asciiBlock) {
+      // fine, nothing else
+    }
+    // tooltip or hover effect for any skill? just to show JS knowledge 30% but we make interactive
+    const skillCards = document.querySelectorAll('.skill-card');
+    skillCards.forEach(card => {
+      card.addEventListener('click', () => {
+        // simple console playful feedback
+        console.log("📌 skill inspected — duct tape level: certified");
+      });
+    });
+    // add small "copy email" or something minimal to show JS
+    const emailLink = document.querySelector('a[href^="mailto"]');
+    if(emailLink) {
+      emailLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mail = 'imroniskandarov240@gmail.com';
+        navigator.clipboard.writeText(mail).then(() => {
+          const snack = document.createElement('div');
+          snack.textContent = '✉️ email copied to clipboard';
+          snack.style.position = 'fixed';
+          snack.style.bottom = '20px';
+          snack.style.left = '20px';
+          snack.style.backgroundColor = '#1a1a1a';
+          snack.style.color = '#f0f0f0';
+          snack.style.padding = '8px 18px';
+          snack.style.borderRadius = '40px';
+          snack.style.fontSize = '0.8rem';
+          snack.style.border = '1px solid #2d2d2d';
+          snack.style.zIndex = '999';
+          document.body.appendChild(snack);
+          setTimeout(() => snack.remove(), 1800);
+        }).catch(() => alert("manual copy: " + mail));
+      });
+    }
+
+    // Manjaro style welcome : display some console homage
+    console.log("%c   ImronFrontend | portfolio | built with black magic & white light", "color: #aaa; font-size: 12px;");
+    console.log("%c → HTML(80) CSS(75) JS(30) — but we craft experiences", "color: #eee; background: #000;");
+  })();
+</script>
+<!-- additional small styling hint for contrast white elements -->
+<style>
+  .progress-fill {
+    background: #f5f5f5;
+    box-shadow: 0 0 3px rgba(255,255,255,0.3);
+  }
+  .repo-card i, .social-item i {
+    filter: drop-shadow(0 0 1px #444);
+  }
+  a {
+    text-decoration: none;
+  }
+  .day.active-low { background-color: #2a2a2a; }
+  .day.active-med { background-color: #626262; }
+  .day.active-high { background-color: #a3a3a3; }
+  .day.active-max { background-color: #ffffff; box-shadow: 0 0 2px white; }
+  .sys-panel, .contrib-area, .skill-card, .repo-card {
+    backdrop-filter: brightness(0.98);
+  }
+  body {
+    background: radial-gradient(circle at 10% 20%, #000000, #020202);
+  }
+</style>
+</body>
+</html>
